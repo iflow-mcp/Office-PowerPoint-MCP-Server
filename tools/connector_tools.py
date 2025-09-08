@@ -29,15 +29,15 @@ def register_connector_tools(app, presentations, get_current_presentation_id, va
         
         Args:
             slide_index: Index of the slide (0-based)
-            connector_type: Type of connector ("straight", "elbow", "curved")
+            connector_type: Type of connector ("straight", "elbow", "curve")
             start_x: Starting X coordinate in inches
             start_y: Starting Y coordinate in inches
-            end_x: Ending X coordinate in inches  
+            end_x: Ending X coordinate in inches
             end_y: Ending Y coordinate in inches
             line_width: Width of the connector line in points
             color: RGB color as [r, g, b] list
             presentation_id: Optional presentation ID (uses current if not provided)
-            
+
         Returns:
             Dictionary with operation results
         """
@@ -46,20 +46,20 @@ def register_connector_tools(app, presentations, get_current_presentation_id, va
             pres_id = presentation_id or get_current_presentation_id()
             if pres_id not in presentations:
                 return {"error": "Presentation not found"}
-            
+
             pres = presentations[pres_id]
-            
+
             # Validate slide index
             if not (0 <= slide_index < len(pres.slides)):
                 return {"error": f"Slide index {slide_index} out of range"}
-            
+
             slide = pres.slides[slide_index]
-            
+
             # Map connector types
             connector_map = {
                 'straight': MSO_CONNECTOR.STRAIGHT,
                 'elbow': MSO_CONNECTOR.ELBOW,
-                'curved': MSO_CONNECTOR.CURVED
+                'curve': MSO_CONNECTOR.CURVE
             }
             
             if connector_type.lower() not in connector_map:
